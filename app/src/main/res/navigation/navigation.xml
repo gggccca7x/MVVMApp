@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookingFragment"
-        android:name="com.george.mvvmapp.screens.BookingFragment"
+        android:name="com.george.mvvmapp.screens.booking_fragment.BookingFragment"
         android:label="fragment_booking"
         tools:layout="@layout/fragment_booking" />
 </navigation>
