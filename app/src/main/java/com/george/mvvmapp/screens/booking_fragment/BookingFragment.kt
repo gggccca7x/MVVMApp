@@ -17,7 +17,7 @@ class BookingFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_title, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
         viewModel = ViewModelProviders.of(this).get(BookingViewModel::class.java)
 
 
