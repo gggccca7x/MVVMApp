@@ -1,26 +1,28 @@
 package com.george.mvvmapp.screens.booking_fragment
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.*
 
 class BookingViewModel : ViewModel() {
 
-    var longTime = MutableLiveData<Long>()
+    private val _longTime = MutableLiveData<Long>()
+    val longTime: LiveData<Long>
+        get() = _longTime
+
 
     init {
-        longTime.value = System.currentTimeMillis()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-
+        _longTime.value = System.currentTimeMillis()
     }
 
     fun onDateChanged(year: Int, month: Int, dayOfMonth: Int) {
         val instance = Calendar.getInstance()
         instance.set(year, month, dayOfMonth)
-        longTime.value = instance.timeInMillis
+        _longTime.value = instance.timeInMillis
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 }
