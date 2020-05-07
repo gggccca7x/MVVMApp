@@ -17,7 +17,7 @@ interface AppointmentDatabaseDao {
 
     @Query("SELECT * FROM appointment_table ORDER BY start_time_milli")
     fun getAllAppointments() : List<Appointment>
-//    fun getAllAppointments() : LiveData<List<Appointment>>
+//    fun getAllAppointments() : LiveData<List<Appointment>> //test cannot read live data for some reason
 
     @Delete
     fun delete(app: Appointment)
