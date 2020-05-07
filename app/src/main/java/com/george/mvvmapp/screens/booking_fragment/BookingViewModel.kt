@@ -11,7 +11,6 @@ class BookingViewModel : ViewModel() {
     val longTime: LiveData<Long>
         get() = _longTime
 
-
     init {
         _longTime.value = System.currentTimeMillis()
     }
