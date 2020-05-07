@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-
-        Timber.i("TIMBERINO WORKIGNINO")
     }
 
     override fun onSupportNavigateUp(): Boolean {
