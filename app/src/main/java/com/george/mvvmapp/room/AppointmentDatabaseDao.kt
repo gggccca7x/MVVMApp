@@ -16,7 +16,8 @@ interface AppointmentDatabaseDao {
     fun get(key: Long): Appointment
 
     @Query("SELECT * FROM appointment_table ORDER BY start_time_milli")
-    fun getAllAppointments() : LiveData<List<Appointment>>
+    fun getAllAppointments() : List<Appointment>
+//    fun getAllAppointments() : LiveData<List<Appointment>>
 
     @Delete
     fun delete(app: Appointment)

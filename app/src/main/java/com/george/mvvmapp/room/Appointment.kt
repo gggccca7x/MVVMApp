@@ -10,5 +10,5 @@ data class Appointment(
     var _id: Long = 0L,
 
     @ColumnInfo(name = "start_time_milli")
-    val startTimeMilli: Long
+    val startTimeMilli: Long = System.currentTimeMillis()
 )
