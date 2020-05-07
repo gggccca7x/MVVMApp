@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_title.view.*
 
 class TitleFragment : Fragment() {
 
@@ -13,7 +16,13 @@ class TitleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_title, container, false)
+        val binding = inflater.inflate(R.layout.fragment_title, container, false)
+
+        binding.button.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_titleFragment_to_bookingFragment)
+        )
+
+        return binding
     }
 
 }
