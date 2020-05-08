@@ -8,14 +8,6 @@ import dagger.Provides
 class AppModule {
 
     companion object {
-        @Provides
-        fun someString() : String {
-            return "this is a test string"
-        }
-
-        @Provides
-        fun getApp(application: Application?) : Boolean {
-            return application == null
-        }
+        
     }
 }
