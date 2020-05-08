@@ -1,6 +1,7 @@
 package com.george.mvvmapp.di
 
 import com.george.mvvmapp.AuthActivity
+import com.george.mvvmapp.MainActivity
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -9,5 +10,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeAuthActivity(): AuthActivity
+    abstract fun contributeMainActivity(): MainActivity
 }
