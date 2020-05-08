@@ -8,8 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.george.mvvmapp.databinding.ActivityMainBinding
 import dagger.android.support.DaggerAppCompatActivity
-import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
