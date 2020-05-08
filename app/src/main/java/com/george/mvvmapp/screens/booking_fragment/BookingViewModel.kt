@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.*
+import javax.inject.Inject
 
-class BookingViewModel : ViewModel() {
+class BookingViewModel @Inject constructor() : ViewModel() {
 
     private val _longTime = MutableLiveData<Long>()
     val longTime: LiveData<Long>
