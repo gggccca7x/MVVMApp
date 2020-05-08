@@ -8,6 +8,6 @@ import dagger.Provides
 class AppModule {
 
     companion object {
-        
+
     }
 }
