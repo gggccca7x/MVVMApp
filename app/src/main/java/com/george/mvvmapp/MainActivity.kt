@@ -1,6 +1,5 @@
 package com.george.mvvmapp
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
@@ -8,9 +7,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.george.mvvmapp.databinding.ActivityMainBinding
+import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
