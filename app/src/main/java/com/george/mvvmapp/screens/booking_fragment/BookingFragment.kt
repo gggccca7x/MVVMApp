@@ -10,15 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.george.mvvmapp.R
 import com.george.mvvmapp.databinding.FragmentBookingBinding
+import com.george.mvvmapp.viewmodels.ViewModelProviderFactory
+import javax.inject.Inject
 
 class BookingFragment : Fragment() {
 
     private lateinit var viewModel: BookingViewModel
-    private lateinit var binding: FragmentBookingBinding
+
+    @Inject
+    val providerFactory: ViewModelProviderFactory? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
+        val binding : FragmentBookingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
         viewModel = ViewModelProviders.of(this).get(BookingViewModel::class.java)
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
