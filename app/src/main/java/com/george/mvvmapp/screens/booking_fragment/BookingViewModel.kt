@@ -3,6 +3,7 @@ package com.george.mvvmapp.screens.booking_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -13,6 +14,7 @@ class BookingViewModel @Inject constructor() : ViewModel() {
         get() = _longTime
 
     init {
+        Timber.i("view model created")
         _longTime.value = System.currentTimeMillis()
     }
 

@@ -1,5 +1,6 @@
 package com.george.mvvmapp.di.booking
 
+import androidx.lifecycle.ViewModel
 import com.george.mvvmapp.di.ViewModelKey
 import com.george.mvvmapp.screens.booking_fragment.BookingViewModel
 import dagger.Binds
@@ -12,6 +13,13 @@ abstract class BookingViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(BookingViewModel::class)
-    abstract fun bindBookingViewModel(viewModel: BookingViewModel)
+    abstract fun bindBookingViewModel(viewModel: BookingViewModel) : ViewModel
+
+//    @Provides
+//    @IntoMap
+//    @ViewModelKey(BookingViewModel::class)
+//    fun provideBookingViewModel(viewModel: BookingViewModel) : ViewModel {
+//        return viewModel
+//    }
 
 }
