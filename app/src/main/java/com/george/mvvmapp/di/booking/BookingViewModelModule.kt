@@ -14,12 +14,4 @@ abstract class BookingViewModelModule {
     @IntoMap
     @ViewModelKey(BookingViewModel::class)
     abstract fun bindBookingViewModel(viewModel: BookingViewModel) : ViewModel
-
-//    @Provides
-//    @IntoMap
-//    @ViewModelKey(BookingViewModel::class)
-//    fun provideBookingViewModel(viewModel: BookingViewModel) : ViewModel {
-//        return viewModel
-//    }
-
 }

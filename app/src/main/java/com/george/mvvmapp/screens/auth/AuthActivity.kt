@@ -1,9 +1,8 @@
-package com.george.mvvmapp
+package com.george.mvvmapp.screens.auth
 
 import android.os.Bundle
+import com.george.mvvmapp.R
 import dagger.android.support.DaggerAppCompatActivity
-import timber.log.Timber
-import javax.inject.Inject
 
 class AuthActivity : DaggerAppCompatActivity() {
 
