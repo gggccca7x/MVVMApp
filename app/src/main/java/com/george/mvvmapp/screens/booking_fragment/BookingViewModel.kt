@@ -14,7 +14,7 @@ class BookingViewModel @Inject constructor() : ViewModel() {
         get() = _longTime
 
     init {
-        Timber.i("view model created")
+        Timber.i("booking fragment view model created")
         _longTime.value = System.currentTimeMillis()
     }
 
