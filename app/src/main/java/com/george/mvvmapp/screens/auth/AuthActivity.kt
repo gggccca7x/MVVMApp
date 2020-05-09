@@ -14,7 +14,7 @@ class AuthActivity : DaggerAppCompatActivity() {
     private lateinit var viewModel: AuthViewModel
 
     var providerFactory: ViewModelProviderFactory? = null
-        @Inject get
+        @Inject set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

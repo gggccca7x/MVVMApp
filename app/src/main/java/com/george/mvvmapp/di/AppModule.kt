@@ -7,9 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
-//i dont have any app level dependencies yet, the example has glide picture for his, https://www.youtube.com/watch?v=0rCOVY60lx0&list=PLgCYzUzKIBE8AOAspC3DHoBNZIBHbIOsC&index=11
-
+// could/should this be abstract?
 @Module
 class AppModule {
 

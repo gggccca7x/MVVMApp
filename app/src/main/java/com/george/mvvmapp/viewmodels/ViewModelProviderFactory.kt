@@ -40,10 +40,6 @@ class ViewModelProviderFactory @Inject constructor(creators: MutableMap<Class<ou
         }
     }
 
-    companion object {
-        private val TAG: String? = "ViewModelProviderFactor"
-    }
-
     init {
         this.creators = creators
     }

@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 
-//where to add the dependencies for the auth sub component
+//where to add the dependencies for the auth sub component - the auth activity and view model
 @Module
 class AuthModule {
 
