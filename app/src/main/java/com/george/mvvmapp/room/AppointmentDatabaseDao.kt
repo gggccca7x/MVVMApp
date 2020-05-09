@@ -1,6 +1,5 @@
 package com.george.mvvmapp.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
