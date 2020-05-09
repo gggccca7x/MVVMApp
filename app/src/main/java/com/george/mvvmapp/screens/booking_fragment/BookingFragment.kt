@@ -12,27 +12,19 @@ import androidx.lifecycle.ViewModelProviders
 import com.george.mvvmapp.R
 import com.george.mvvmapp.databinding.FragmentBookingBinding
 import com.george.mvvmapp.viewmodels.ViewModelProviderFactory
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class BookingFragment : Fragment() {
+class BookingFragment : DaggerFragment() {
 
     private lateinit var viewModel: BookingViewModel
 
     var providerFactory: ViewModelProviderFactory? = null
-        @Inject get
+        @Inject set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding : FragmentBookingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
-
-        //old working code
-//        viewModel = ViewModelProviders.of(this).get(BookingViewModel::class.java)
-//        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-//            viewModel.onDateChanged(year, month, dayOfMonth)
-//        }
-//        viewModel.longTime.observe(viewLifecycleOwner, Observer {
-//            binding.calendarView.setDate(it, false, false)
-//        })
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(BookingViewModel::class.java)
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->

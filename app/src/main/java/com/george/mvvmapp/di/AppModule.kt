@@ -1,5 +1,6 @@
 package com.george.mvvmapp.di
 
+import android.app.Application
 import com.george.mvvmapp.util.REST_BASE_URL
 import dagger.Module
 import dagger.Provides
