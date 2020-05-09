@@ -19,10 +19,7 @@ abstract class ActivityBuilderModule {
     )
     abstract fun contributeAuthActivity(): AuthActivity
 
-    @ContributesAndroidInjector(
-//        modules = [BookingViewModelModule::class,
-//            BookingModule::class]
-    )
+    @ContributesAndroidInjector
     abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector(
