@@ -1,5 +1,6 @@
 package com.george.mvvmapp.di
 
+import com.george.mvvmapp.AuthActivity
 import com.george.mvvmapp.MainActivity
 import com.george.mvvmapp.di.booking.BookingViewModelModule
 import dagger.Module
@@ -12,4 +13,7 @@ abstract class ActivityBuilderModule {
         modules = [BookingViewModelModule::class]
     )
     abstract fun contributeMainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeAuthActivity(): AuthActivity
 }
