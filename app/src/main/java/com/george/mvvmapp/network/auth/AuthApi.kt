@@ -8,4 +8,8 @@ interface AuthApi {
 
     @GET
     fun getInformation(): Call<ResponseBody>
+
+    //pass in the relative url - after the base url
+    @GET("posts")
+    fun getPosts(): Call<List<Post>>
 }
