@@ -1,10 +1,9 @@
 package com.george.mvvmapp
 
 import androidx.room.Room
-import androidx.test.espresso.base.Default
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.george.mvvmapp.room.Appointment
+import com.george.mvvmapp.room.AppointmentDB
 import com.george.mvvmapp.room.AppointmentDatabase
 import com.george.mvvmapp.room.AppointmentDatabaseDao
 import junit.framework.Assert.assertEquals
@@ -18,7 +17,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class AppointmentDatabaseTest {
+class AppointmentDBDatabaseTest {
 
     private lateinit var appDao: AppointmentDatabaseDao
     private lateinit var db: AppointmentDatabase
@@ -45,8 +44,8 @@ class AppointmentDatabaseTest {
     @Throws(Exception::class)
     fun insertAndGetAppointment() {
         CoroutineScope(Dispatchers.Main).launch {
-            val app = Appointment()
-            val app2 = Appointment()
+            val app = AppointmentDB()
+            val app2 = AppointmentDB()
             appDao.insert(app)
             appDao.insert(app2)
             val apps = appDao.getAllAppointments()
