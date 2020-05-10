@@ -3,7 +3,12 @@ package com.george.mvvmapp.screens.booking_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.george.mvvmapp.domain.DomainAppointment
 import com.george.mvvmapp.room.AppointmentDatabaseDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -11,6 +16,13 @@ import javax.inject.Inject
 class BookingViewModel @Inject constructor(
     databaseDao: AppointmentDatabaseDao
 ) : ViewModel() {
+
+    private var job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
+
+    private var today = MutableLiveData<DomainAppointment>()
+    private val appointments = databaseDao.getAllAppointments()
+
 
     private val _longTime = MutableLiveData<Long>()
     val longTime: LiveData<Long>
@@ -20,12 +32,23 @@ class BookingViewModel @Inject constructor(
         Timber.i("booking fragment view model created")
         Timber.i("check to see if dependency database dao is initiated correctly: $databaseDao")
         _longTime.value = System.currentTimeMillis()
+
     }
 
     fun onDateChanged(year: Int, month: Int, dayOfMonth: Int) {
         val instance = Calendar.getInstance()
         instance.set(year, month, dayOfMonth)
         _longTime.value = instance.timeInMillis
+        //check if this date is already in the database
+
+    }
+
+    fun bookButtonClicked() {
+
+    }
+
+    fun deleteButtonClicked() {
+
     }
 
     override fun onCleared() {
