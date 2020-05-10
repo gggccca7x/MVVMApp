@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.george.mvvmapp.domain.DomainAppointment
+import com.george.mvvmapp.room.AppointmentDB
 import com.george.mvvmapp.room.AppointmentDatabaseDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +21,8 @@ class BookingViewModel @Inject constructor(
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    private var today = MutableLiveData<DomainAppointment>()
-    private val appointments = databaseDao.getAllAppointments()
+    private val _today = MutableLiveData<AppointmentDB>() //convert to domain appointment in the future with repository pattern
+    private val appointments: LiveData<List<AppointmentDB>> = databaseDao.getAllAppointmentsLiveData()
 
 
     private val _longTime = MutableLiveData<Long>()
@@ -33,6 +34,18 @@ class BookingViewModel @Inject constructor(
         Timber.i("check to see if dependency database dao is initiated correctly: $databaseDao")
         _longTime.value = System.currentTimeMillis()
 
+        _today.value = AppointmentDB(1, _longTime.value!!)
+
+        Timber.i("check current date: ${checkCurrentDate(_today.value!!.startTimeMilli)}")
+    }
+
+    private fun checkCurrentDate(today: Long) : Boolean {
+        appointments.value?.forEach {
+            if(it.startTimeMilli == today) {
+                return false
+            }
+        }
+        return true
     }
 
     fun onDateChanged(year: Int, month: Int, dayOfMonth: Int) {
@@ -53,5 +66,6 @@ class BookingViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        job.cancel()
     }
 }

@@ -1,5 +1,6 @@
 package com.george.mvvmapp.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -12,11 +13,16 @@ interface AppointmentDatabaseDao {
     fun update(app: AppointmentDB)
 
     @Query("SELECT * from appointment_table WHERE _id = :key")
-    fun get(key: Long): AppointmentDB
+    fun getByID(key: Long): AppointmentDB
+
+    @Query("SELECT * from appointment_table WHERE start_time_milli = :time")
+    fun getByTime(time: Long): AppointmentDB
 
     @Query("SELECT * FROM appointment_table ORDER BY start_time_milli")
     fun getAllAppointments() : List<AppointmentDB>
-//    fun getAllAppointments() : LiveData<List<Appointment>> //test cannot read live data for some reason
+
+    @Query("SELECT * FROM appointment_table ORDER BY start_time_milli")
+    fun getAllAppointmentsLiveData() : LiveData<List<AppointmentDB>>
 
     @Delete
     fun delete(app: AppointmentDB)
