@@ -8,24 +8,20 @@ import androidx.lifecycle.ViewModel
 import com.george.mvvmapp.domain.DomainAppointment
 import com.george.mvvmapp.room.AppointmentDB
 import com.george.mvvmapp.room.AppointmentDatabaseDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.floor
 
 class BookingViewModel @Inject constructor(
-    databaseDao: AppointmentDatabaseDao
+    val databaseDao: AppointmentDatabaseDao
 ) : ViewModel() {
 
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    private val appointments: LiveData<List<AppointmentDB>> = databaseDao.getAllAppointmentsLiveData()
-
+    private val appointments: LiveData<List<AppointmentDB>>
 
     // these are always being set together, find a way to make 1 variable holding both pieces of information?
     private val _today = MutableLiveData<AppointmentDB>() //convert to domain appointment in the future with repository pattern
@@ -51,7 +47,6 @@ class BookingViewModel @Inject constructor(
 
     init {
         Timber.i("booking fragment view model created")
-        Timber.i("check to see if dependency database dao is initiated correctly: $databaseDao")
         val instance = Calendar.getInstance()
         instance.set(instance.get(Calendar.YEAR), instance.get(Calendar.MONTH), instance.get(Calendar.DAY_OF_MONTH), 9, 0, 0)
         val floatVal = instance.timeInMillis * 0.001
@@ -59,18 +54,20 @@ class BookingViewModel @Inject constructor(
         _longTime.value = longVal
         _today.value = AppointmentDB(1, _longTime.value!!)
 
+        appointments = databaseDao.getAllAppointmentsLiveData()
         _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
-        Timber.i("check is booked: ${_isTodayBooked.value}")
-
-
     }
 
     private fun checkCurrentDateIsBooked(today: Long) : Boolean {
         appointments.value?.forEach {
-            if(it.startTimeMilli == today) {
+            Timber.i("found an item in the database: database time: ${it.startTimeMilli}, comparing to time put into method: $today")
+//            if(it.startTimeMilli == today) { // not working not sure why
+            if((it.startTimeMilli - today) == 0L) { // not working not sure why
+                Timber.i("current date is booked")
                 return true
             }
         }
+        Timber.i("current date isnt booked")
         return false
     }
 
@@ -80,16 +77,34 @@ class BookingViewModel @Inject constructor(
         val floatVal = instance.timeInMillis * 0.001
         val longVal = (floor(floatVal) * 1000).toLong()
         _longTime.value = longVal
-        Timber.i("time in millis of this instance is: ${instance.timeInMillis}")
+//        Timber.i("time in millis of this instance is: ${instance.timeInMillis}")
         _today.value!!.startTimeMilli = _longTime.value!!
         //check if this date is already in the database
-        _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
-        Timber.i("check is booked: ${_isTodayBooked.value}")
+        uiScope.launch {
+            _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
+            val dbItems = getDatabaseAppointments() //purely for testing
+            dbItems?.forEach {
+                Timber.i("FOUND A DATABASE ITEM: ${it.startTimeMilli}")
+            }
+        }
+    }
+    private suspend fun getDatabaseAppointments() : List<AppointmentDB>? {
+        return withContext(Dispatchers.IO) {
+            databaseDao.getAllAppointments()
+        }
     }
 
     fun bookButtonClicked() {
-
-
+        uiScope.launch {
+            insertToDB()
+        }
+    }
+    private suspend fun insertToDB() {
+        withContext(Dispatchers.IO) {
+            // In the future this will go straight to the internet and then the repository pattern will put
+            // this in the database and live data will update the database with firebase result
+            databaseDao.insert(_today.value!!)
+        }
     }
 
     fun deleteButtonClicked() {

@@ -26,8 +26,9 @@ class BookingFragment : DaggerFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding : FragmentBookingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
-
         viewModel = ViewModelProviders.of(this, providerFactory).get(BookingViewModel::class.java)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             viewModel.onDateChanged(year, month, dayOfMonth)
