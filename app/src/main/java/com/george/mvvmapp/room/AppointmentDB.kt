@@ -11,7 +11,7 @@ data class AppointmentDB(
     var _id: Long = 0L,
 
     @ColumnInfo(name = "start_time_milli")
-    val startTimeMilli: Long = System.currentTimeMillis()
+    var startTimeMilli: Long = System.currentTimeMillis()
 )
 
 fun List<AppointmentDB>.asDomainModel(): List<DomainAppointment> {
