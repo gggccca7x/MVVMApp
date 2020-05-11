@@ -13,6 +13,7 @@ import com.george.mvvmapp.R
 import com.george.mvvmapp.databinding.FragmentBookingBinding
 import com.george.mvvmapp.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 class BookingFragment : DaggerFragment() {
@@ -27,10 +28,12 @@ class BookingFragment : DaggerFragment() {
         val binding : FragmentBookingBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_booking, container, false)
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(BookingViewModel::class.java)
+
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             viewModel.onDateChanged(year, month, dayOfMonth)
         }
         viewModel.longTime.observe(viewLifecycleOwner, Observer {
+            Timber.i("time is: $it")
             binding.calendarView.setDate(it, false, false)
         })
 
