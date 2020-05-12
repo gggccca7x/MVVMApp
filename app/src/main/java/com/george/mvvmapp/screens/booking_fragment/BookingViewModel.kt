@@ -54,7 +54,8 @@ class BookingViewModel @Inject constructor(
         val floatVal = instance.timeInMillis * 0.001
         val longVal = (floor(floatVal) * 1000).toLong()
         _longTime.value = longVal
-        _today.value = AppointmentDB(1, _longTime.value!!)
+        _today.value = AppointmentDB()
+        _today.value!!.startTimeMilli = _longTime.value!!
 
         _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
     }
@@ -110,13 +111,13 @@ class BookingViewModel @Inject constructor(
 
     fun deleteButtonClicked() {
         uiScope.launch {
-            deleteFromDB(_today.value!!)
+            deleteFromDB(_longTime.value!!)
         }
     }
 
-    private suspend fun deleteFromDB(appointmentDB: AppointmentDB) {
+    private suspend fun deleteFromDB(time: Long) {
         withContext(Dispatchers.IO) {
-            databaseDao.delete(appointmentDB)
+            databaseDao.deleteByTime(time)
         }
     }
 
