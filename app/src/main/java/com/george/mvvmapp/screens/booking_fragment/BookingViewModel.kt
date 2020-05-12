@@ -21,7 +21,9 @@ class BookingViewModel @Inject constructor(
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
-    private val appointments: LiveData<List<AppointmentDB>>
+    private val _appointments = databaseDao.getAllAppointmentsLiveData()
+    val appointments: LiveData<List<AppointmentDB>>
+        get() = _appointments
 
     // these are always being set together, find a way to make 1 variable holding both pieces of information?
     private val _today = MutableLiveData<AppointmentDB>() //convert to domain appointment in the future with repository pattern
@@ -54,7 +56,6 @@ class BookingViewModel @Inject constructor(
         _longTime.value = longVal
         _today.value = AppointmentDB(1, _longTime.value!!)
 
-        appointments = databaseDao.getAllAppointmentsLiveData()
         _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
     }
 

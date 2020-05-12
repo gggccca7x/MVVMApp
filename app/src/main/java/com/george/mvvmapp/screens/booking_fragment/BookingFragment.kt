@@ -37,8 +37,11 @@ class BookingFragment : DaggerFragment() {
             Timber.i("time is: $it")
             binding.calendarView.setDate(it, false, false)
         })
+        viewModel.appointments.observe(viewLifecycleOwner, Observer {
+            Timber.i("appointment list from database change")
+            //will put a boolean here eventually probably
+        })
 
         return binding.root
     }
-
 }
