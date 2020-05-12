@@ -35,11 +35,11 @@ class BookingFragment : DaggerFragment() {
         }
         viewModel.longTime.observe(viewLifecycleOwner, Observer {
             Timber.i("time is: $it")
-            binding.calendarView.setDate(it, false, false)
+            binding.calendarView.setDate(it, false, false) //this should probably be in the view model
         })
         viewModel.appointments.observe(viewLifecycleOwner, Observer {
-            Timber.i("appointment list from database change")
-            //will put a boolean here eventually probably
+            Timber.i("appointment list from database change, size of DB: ${it.size}")
+            //will put a boolean here eventually probably - data deletes but doesnt update the ui, need to ask transformations to change due to the delete/insert
         })
 
         return binding.root

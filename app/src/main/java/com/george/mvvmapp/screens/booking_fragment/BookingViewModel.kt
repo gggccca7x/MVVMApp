@@ -109,7 +109,15 @@ class BookingViewModel @Inject constructor(
     }
 
     fun deleteButtonClicked() {
+        uiScope.launch {
+            deleteFromDB(_today.value!!)
+        }
+    }
 
+    private suspend fun deleteFromDB(appointmentDB: AppointmentDB) {
+        withContext(Dispatchers.IO) {
+            databaseDao.delete(appointmentDB)
+        }
     }
 
     override fun onCleared() {
