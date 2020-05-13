@@ -61,8 +61,7 @@ class BookingViewModel @Inject constructor(
     private fun checkCurrentDateIsBooked(today: Long) : Boolean {
         appointments.value?.forEach {
             Timber.i("found an item in the database: database time: ${it.startTimeMilli}, comparing to time put into method: $today")
-//            if(it.startTimeMilli == today) { // not working not sure why
-            if((it.startTimeMilli - today) == 0L) { // not working not sure why
+            if(it.startTimeMilli == today) { 
                 Timber.i("current date is booked")
                 return true
             }
@@ -88,7 +87,6 @@ class BookingViewModel @Inject constructor(
         val floatVal = instance.timeInMillis * 0.001
         val longVal = (floor(floatVal) * 1000).toLong()
         _longTime.value = longVal
-//        Timber.i("time in millis of this instance is: ${instance.timeInMillis}")
         _today.value!!.startTimeMilli = _longTime.value!!
     }
     private suspend fun getDatabaseAppointments() : List<AppointmentDB>? {
