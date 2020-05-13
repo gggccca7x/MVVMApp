@@ -51,12 +51,10 @@ class BookingViewModel @Inject constructor(
         Timber.i("booking fragment view model created")
         val instance = Calendar.getInstance()
         instance.set(instance.get(Calendar.YEAR), instance.get(Calendar.MONTH), instance.get(Calendar.DAY_OF_MONTH), 9, 0, 0)
-        val floatVal = instance.timeInMillis * 0.001
-        val longVal = (floor(floatVal) * 1000).toLong()
-        _longTime.value = longVal
         _today.value = AppointmentDB()
-        _today.value!!.startTimeMilli = _longTime.value!!
+        updateTimeLiveData(instance)
 
+        //should I use coroutines for any of this initialisation stuff?
         _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
     }
 
@@ -76,11 +74,7 @@ class BookingViewModel @Inject constructor(
     fun onDateChanged(year: Int, month: Int, dayOfMonth: Int) {
         val instance = Calendar.getInstance()
         instance.set(year, month, dayOfMonth, 9, 0, 0)
-        val floatVal = instance.timeInMillis * 0.001
-        val longVal = (floor(floatVal) * 1000).toLong()
-        _longTime.value = longVal
-//        Timber.i("time in millis of this instance is: ${instance.timeInMillis}")
-        _today.value!!.startTimeMilli = _longTime.value!!
+        updateTimeLiveData(instance)
         //check if this date is already in the database
         uiScope.launch {
             _isTodayBooked.value = checkCurrentDateIsBooked(_today.value!!.startTimeMilli)
@@ -89,6 +83,13 @@ class BookingViewModel @Inject constructor(
                 Timber.i("FOUND A DATABASE ITEM: ${it.startTimeMilli}")
             }
         }
+    }
+    private fun updateTimeLiveData(instance: Calendar) {
+        val floatVal = instance.timeInMillis * 0.001
+        val longVal = (floor(floatVal) * 1000).toLong()
+        _longTime.value = longVal
+//        Timber.i("time in millis of this instance is: ${instance.timeInMillis}")
+        _today.value!!.startTimeMilli = _longTime.value!!
     }
     private suspend fun getDatabaseAppointments() : List<AppointmentDB>? {
         return withContext(Dispatchers.IO) {
