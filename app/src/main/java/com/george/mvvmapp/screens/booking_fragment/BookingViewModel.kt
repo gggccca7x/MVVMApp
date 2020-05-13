@@ -121,8 +121,15 @@ class BookingViewModel @Inject constructor(
         }
     }
 
+    fun eventAppointmentsChanged() {
+        val instance = Calendar.getInstance()
+        instance.timeInMillis = _longTime.value!!
+        onDateChanged(instance.get(Calendar.YEAR), instance.get(Calendar.MONTH), instance.get(Calendar.DAY_OF_MONTH))
+    }
+
     override fun onCleared() {
         super.onCleared()
         job.cancel()
     }
+
 }

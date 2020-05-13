@@ -40,6 +40,7 @@ class BookingFragment : DaggerFragment() {
         viewModel.appointments.observe(viewLifecycleOwner, Observer {
             Timber.i("appointment list from database change, size of DB: ${it.size}")
             //will put a boolean here eventually probably - data deletes but doesnt update the ui, need to ask transformations to change due to the delete/insert
+            viewModel.eventAppointmentsChanged()
         })
 
         return binding.root
